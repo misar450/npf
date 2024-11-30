@@ -1,55 +1,62 @@
-# NPF: filtro de paquetes con estado que soporta NAT, conjuntos IP, etc.
+Aquí tienes la traducción revisada, considerando cada término técnico cuidadosamente y sin traducir aquellos que no corresponden:
 
-[![Estado de la Construcción](https://travis-ci.com/rmind/npf.svg?branch=master)](https://travis-ci.com/rmind/npf)
+---
 
-NPF es un filtro de paquetes de capa 3 que soporta inspección de paquetes con estado,
-IPv6, NAT, conjuntos IP, extensiones y mucho más.
-Utiliza [BPF](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) como su
-motor principal y fue diseñado con un enfoque en alto rendimiento, escalabilidad,
-multi-threading y modularidad. NPF fue escrito desde cero en 2009. Está
-escrito en C99 y distribuido bajo la licencia BSD de 2 cláusulas.
+# NPF: filtro de paquetes stateful con soporte para NAT, conjuntos de IP, etc.
 
-NPF se proporciona como una **biblioteca de espacio de usuario** para ser utilizada en una aplicación personalizada
-para procesar paquetes. Puede ejecutarse en Linux, típicamente, en combinación con
-frameworks como [Data Plane Development Kit (DPDK)](https://www.dpdk.org/)
-o [netmap](https://www.freebsd.org/cgi/man.cgi?query=netmap&sektion=4).
+[![Estado de compilación](https://travis-ci.com/rmind/npf.svg?branch=master)](https://travis-ci.com/rmind/npf)
+
+NPF es un filtro de paquetes de nivel 3 (*layer 3 packet filter*) que soporta inspección de paquetes *stateful*, IPv6, NAT, conjuntos de IP (*IP sets*), extensiones y más.  
+Utiliza [BPF (Berkeley Packet Filter)](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) como su motor central y fue diseñado con enfoque en alto rendimiento, escalabilidad, procesamiento multihilo (*multi-threading*) y modularidad.  
+NPF fue desarrollado desde cero en 2009, está escrito en C99 y se distribuye bajo la licencia BSD de 2 cláusulas.
+
+NPF se proporciona como una **biblioteca en espacio de usuario** (*userspace library*) diseñada para ser utilizada en aplicaciones personalizadas de procesamiento de paquetes.  
+Puede ejecutarse en Linux, normalmente junto con frameworks como [DPDK (Data Plane Development Kit)](https://www.dpdk.org/) o [netmap](https://www.freebsd.org/cgi/man.cgi?query=netmap&sektion=4).
+
+---
 
 ## Características
 
-NPF ofrece el conjunto tradicional de características proporcionadas por los filtros de paquetes.
-Algunas características clave son:
-- Inspección con estado (seguimiento de conexiones).
-  - Incluye el [seguimiento completo del estado TCP](https://www.usenix.org/events/sec01/invitedtalks/rooij.pdf).
-- Traducción de direcciones de red (NAT):
-  - Traducción estática (sin estado) y dinámica (con estado).
-  - NAPT y otras formas de traducción de puertos (por ejemplo, reenvío de puertos).
-  - NAT de entrada y salida, así como NAT bidireccional.
-  - Traducción de red a red, incluyendo NETMAP y NPTv6.
-- Capacidad de NAT de grado operador (CG-NAT): conocido por servir más de un millón de conexiones.
-- Tablas para conjuntos IP eficientes, incluyendo soporte para _coincidencia de prefijo más largo_.
-- Puertas de enlace de nivel de aplicación (por ejemplo, para soportar traceroute).
-- NPF usa [BPF con compilación just-in-time (JIT)](https://github.com/rmind/bpfjit).
-- Procedimientos de reglas y un marco para extensiones NPF (plugins).
-- Las extensiones incluyen:
-  - Limitación de velocidad (control de tráfico).
-  - Normalización de tráfico.
-  - Registro de paquetes.
-- Integración con [Data Plane Development Kit](https://dpdk.org/).
+NPF ofrece una gama completa de funciones tradicionales proporcionadas por filtros de paquetes. Algunas características clave son:
 
-Para un conjunto completo de características y su descripción, consulte la documentación de NPF
-y otras páginas del manual.
+- **Inspección stateful** (seguimiento de conexiones):
+  - Incluye el [seguimiento completo del estado TCP](https://www.usenix.org/events/sec01/invitedtalks/rooij.pdf).
+- **Network Address Translation (NAT)**:
+  - Traducción estática (*stateless*) y dinámica (*stateful*).
+  - NAPT y otras formas de traducción de puertos (e.g., redirección de puertos).
+  - NAT de entrada (*inbound*), salida (*outbound*) y bidireccional.
+  - Traducción red-a-red, incluyendo NETMAP y NPTv6.
+- **Carrier-grade NAT (CG-NAT)**: capacidad para manejar más de un millón de conexiones simultáneas.
+- **Tablas para conjuntos de IP (IP sets)** con soporte para _longest prefix match_.
+- **Gateways a nivel de aplicación (Application Level Gateways)**, como soporte para traceroute.
+- Uso de [BPF con compilación just-in-time (JIT)](https://github.com/rmind/bpfjit).
+- Procedimientos de reglas y un marco para extensiones de NPF (*plugins*).
+- Extensiones disponibles:
+  - Limitación de velocidad (*rate limiting*).
+  - Normalización del tráfico.
+  - Registro de paquetes.
+- Integración con [DPDK](https://dpdk.org/).
+
+Para un listado completo de características, consulta la documentación de NPF.
+
+---
 
 ## Uso
 
-Puede probar **[NPF-Router](app)** como una aplicación demo de NPF+DPDK, ejecutando una
-red de prueba virtual con contenedores Docker.
+Puedes probar **[NPF-Router](app)** como una aplicación de demostración que combina NPF con DPDK, ejecutando una red virtual de prueba con contenedores Docker.
+
+---
 
 ## Documentación
 
-Ver en [Github Pages](http://rmind.github.io/npf).
-Fuente en el directorio [docs](docs).
+Disponible en [Github Pages](http://rmind.github.io/npf).  
+El código fuente de la documentación está en el directorio [docs](docs).
+
+---
 
 ## Dependencias
+
+Clona los siguientes repositorios para obtener las bibliotecas necesarias:
 
 - [libnv](https://github.com/rmind/nvlist): `git clone https://github.com/rmind/nvlist`
 - [thmap](https://github.com/rmind/thmap): `git clone https://github.com/rmind/thmap`
@@ -58,30 +65,36 @@ Fuente en el directorio [docs](docs).
 - [bpfjit](https://github.com/rmind/bpfjit): `git clone https://github.com/rmind/bpfjit`
 - [libcdb](https://github.com/rmind/libcdb): `git clone https://github.com/rmind/libcdb`
 
-Cada repositorio proporciona los archivos de construcción para paquetes RPM (`cd pkg && make rpm`)
-y DEB (`cd pkg && make deb`). También puede consultar el
-archivo [Travis](.travis.yml) para ver un ejemplo de cómo construir todo.
+Cada repositorio incluye archivos para construir paquetes RPM (`cd pkg && make rpm`) y DEB (`cd pkg && make deb`).  
+Consulta el archivo [Travis](.travis.yml) para ejemplos de construcción.
+
+---
 
 ## Estructura del código fuente
 
-    app/                - Aplicación demo NPF-Router (NPF + DPDK + Docker)
-    docs/               - fuente de documentación
-    src/                - directorio raíz del código fuente
-        kern/           - el componente del kernel (biblioteca npfkern)
-        lib/            - bibliotecas de extensión que complementan npfctl
-        libnpf/         - biblioteca para gestionar la configuración NPF
-        npfctl/         - interfaz de línea de comandos para controlar NPF
-        npftest/        - pruebas unitarias y herramienta para depurar NPF
-    pkg/                - archivos de empaquetado (RPM y DEB)
-    misc/               - scripts auxiliares
+    app/                - Aplicación de demostración NPF-Router (NPF + DPDK + Docker).
+    docs/               - Documentación.
+    src/                - Directorio raíz del código fuente.
+        kern/           - Componente del kernel (biblioteca npfkern).
+        lib/            - Bibliotecas complementarias para npfctl.
+        libnpf/         - Biblioteca para gestionar configuraciones de NPF.
+        npfctl/         - Interfaz de línea de comandos para controlar NPF.
+        npftest/        - Pruebas unitarias y herramienta de depuración.
+    pkg/                - Archivos de empaquetado (RPM y DEB).
+    misc/               - Scripts auxiliares.
 
-## Paquetes
+---
 
-Para construir los paquetes de la biblioteca libnpf (enlazar usando las banderas `-lnpf` y `-lnpfkern`):
-* RPM (probado en RHEL/CentOS 7): `cd pkg && make rpm`
-* DEB (probado en Debian 9): `cd pkg && make deb`
+## Construcción de paquetes
 
-## Quién está usando NPF?
+Para construir la biblioteca libnpf (enlace con las banderas `-lnpf` y `-lnpfkern`):  
+
+- **RPM** (probado en RHEL/CentOS 7): `cd pkg && make rpm`.  
+- **DEB** (probado en Debian 9): `cd pkg && make deb`.  
+
+---
+
+## ¿Quién usa NPF?
 
 <table>
   <tr height="150">
@@ -91,3 +104,7 @@ Para construir los paquetes de la biblioteca libnpf (enlazar usando las banderas
     <th width="150"><a href="https://bisonrouter.com"><img src="https://bisonrouter.com/img/logo.d1687d60.svg" alt="BisonRouter" align="middle"></a></th>
   </tr>
 </table>
+
+---
+
+¿Ahora es más adecuado?
